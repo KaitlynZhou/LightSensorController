@@ -1,0 +1,144 @@
+import processing.serial.*;
+import cc.arduino.*;
+Arduino arduino;
+float rot = 0;
+
+public void setup() {
+  size(1000, 1000);
+  background(#A5FBFF);
+  arduino = new Arduino(this, Arduino.list()[0], 57600); //change the [0] to a [1] or [2] etc. if your program doesn't work
+}
+
+public void draw() {
+  background(#A5FBFF);
+  int y = arduino.analogRead(5);
+  int z = arduino.analogRead(5);
+  float x = arduino.analogRead(5);
+  System.out.println(y);
+ 
+  if (y>30)
+    y = 350;
+  else
+    y = 300;
+   
+  if (z>30)
+    z = 0;
+  else
+    z = 48;
+ 
+  if (x>30)
+    x = 0.1;
+  else
+    x = -0.1;
+ 
+  //flippers
+  fill(255,255,255);
+  noStroke();
+  translate(500, 50);
+  if (rot<1.5) {
+    rotate(rot);
+    ellipse(140,y,100,50);
+    ellipse(360,y,100,50);
+    rot = rot + (x/10);
+ 
+  //face
+  noStroke();
+  fill(255,255,255);
+  ellipse(250,250,250,250);
+ 
+  //eyeballs
+  fill(0,0,0);
+  ellipse(200,220,50,50-z);
+  ellipse(300,220,50,50-z);
+ 
+  //eye highlights
+  fill(255,255,255);
+  ellipse(200,210,15,15);
+  ellipse(300,210,15,15);
+ 
+  //eyebrows
+  fill(206,214,224);
+  ellipse(230,180,20,20);
+  ellipse(270,180,20,20);
+  //snout
+  ellipse(250,300,110,90);
+ 
+  //nose
+  fill(0,0,0);
+  ellipse(250,285,30,30);
+ 
+  //mouth
+  noFill();
+  stroke(0,0,0);
+  arc(200,280,100,150,0,(PI/4));
+  arc(300,280,100,150,(3*PI)/4,PI);
+ 
+  //whiskers-left
+  line(250,285,170,300);
+  line(250,285,170,280);
+  line(250,285,170,260);
+  //whiskers-right
+  line(250,285,329,300);
+  line(250,285,329,280);
+  line(250,285,329,260);
+ 
+  //baby hairs
+  noStroke();
+  fill(255,255,255);
+  triangle(250,70,220,150,270,150);
+  triangle(270,90,220,150,270,150);
+  }
+  else{
+    rot = rot -(x/10);
+    rotate(rot);
+    ellipse(140,y,100,50);
+    ellipse(360,y,100,50);
+ 
+  //face
+  noStroke();
+  fill(255,255,255);
+  ellipse(250,250,250,250);
+ 
+  //eyeballs
+  fill(0,0,0);
+  ellipse(200,220,50,50-z);
+  ellipse(300,220,50,50-z);
+ 
+  //eye highlights
+  fill(255,255,255);
+  ellipse(200,210,15,15);
+  ellipse(300,210,15,15);
+ 
+  //eyebrows
+  fill(206,214,224);
+  ellipse(230,180,20,20);
+  ellipse(270,180,20,20);
+  //snout
+  ellipse(250,300,110,90);
+ 
+  //nose
+  fill(0,0,0);
+  ellipse(250,285,30,30);
+ 
+  //mouth
+  noFill();
+  stroke(0,0,0);
+  arc(200,280,100,150,0,(PI/4));
+  arc(300,280,100,150,(3*PI)/4,PI);
+ 
+  //whiskers-left
+  line(250,285,170,300);
+  line(250,285,170,280);
+  line(250,285,170,260);
+  //whiskers-right
+  line(250,285,329,300);
+  line(250,285,329,280);
+  line(250,285,329,260);
+ 
+  //baby hairs
+  noStroke();
+  fill(255,255,255);
+  triangle(250,70,220,150,270,150);
+  triangle(270,90,220,150,270,150);
+  }
+}
